@@ -1,63 +1,523 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <style>
-        @font-face {
-            font-family: "Grennette";
-            src: url("static/Grenette Pro/grenette-bold-pro.ttf") format("truetype");
-            font-style: normal;
-            font-weight: bold;
-        }
-        @font-face {
-            font-family: "Grennette";
-            src: url("static/Grenette Pro/grenette-italic-pro.ttf") format("truetype");
-            font-style: italic;
-            font-weight: normal;
-        }
-        @font-face {
-            font-family: "Grennette";
-            src: url("static/Grenette Pro/grenette-regular-pro.ttf") format("truetype");
-            font-style: normal;
-            font-weight: normal;
-        }
-        body {
-            font-family: "Grennette";
-            margin-top: 10%;
-        }
-        section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .links {
-            display: flex;
-            justify-content: space-between;
-        }
-    </style>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Tanush Chopra follows whatever seems interesting."
+    />
+    <meta name="theme-color" content="#0d0e0f" />
+    <link rel="icon" href="static/favicon.svg" type="image/svg+xml" />
     <title>Tanush Chopra</title>
+
+    <style>
+      :root {
+        --bg: #0d0e0f;
+        --text: #e6e2db;
+        --muted: #918e87;
+        --faint: #555653;
+        --accent: #e6e2db;
+        --link: #f26632;
+        --mono: "SFMono-Regular", "SF Mono", "Cascadia Code", "Roboto Mono",
+          Consolas, "Liberation Mono", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-height: 100%;
+        background: var(--bg);
+        color-scheme: dark;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-height: 100%;
+        margin: 0;
+        color: var(--text);
+        background-color: var(--bg);
+        background-image: linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+        background-size: 32px 32px;
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+        text-decoration-color: var(--faint);
+        text-underline-offset: 3px;
+      }
+
+      a:hover {
+        color: var(--link);
+        text-decoration-color: var(--link);
+      }
+
+      a:focus-visible {
+        outline: 1px solid var(--accent);
+        outline-offset: 4px;
+      }
+
+      .shell {
+        width: min(956px, calc(100% - 40px));
+        min-height: calc(100vh - 56px);
+        display: flex;
+        flex-direction: column;
+        margin: 28px auto 64px;
+        padding: 0 28px;
+        border-right: 1px solid var(--faint);
+        border-left: 1px solid var(--faint);
+        background: rgba(13, 14, 15, 0.94);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-height: 36px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--faint);
+      }
+
+      .identity {
+        font-weight: 700;
+      }
+
+      .identity::before {
+        content: "# ";
+        color: var(--accent);
+      }
+
+      .topbar nav {
+        display: flex;
+        gap: 18px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .topbar nav a {
+        text-decoration: none;
+      }
+
+      .topbar nav a::before {
+        content: "[";
+        color: var(--faint);
+      }
+
+      .topbar nav a::after {
+        content: "]";
+        color: var(--faint);
+      }
+
+      .ascii-rule {
+        display: none;
+      }
+
+      .intro {
+        flex: 0 0 auto;
+        padding: 74px 0 62px;
+        border-bottom: 1px solid var(--faint);
+      }
+
+      .eyebrow {
+        display: block;
+        width: max-content;
+        margin: 0 0 24px;
+        padding: 2px 0;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.5;
+        letter-spacing: 0.04em;
+        overflow: visible;
+      }
+
+      h1 {
+        margin: 0 0 26px;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.25;
+      }
+
+      h1::before {
+        content: "# ";
+        color: var(--accent);
+        font-weight: 400;
+      }
+
+      h1 em {
+        color: var(--link);
+        font-style: normal;
+      }
+
+      .intro-copy {
+        max-width: 72ch;
+        padding-left: 18px;
+        border-left: 1px solid var(--faint);
+      }
+
+      .intro-copy p {
+        display: block;
+        margin: 0;
+        color: #c3c0ba;
+      }
+
+      .intro-copy p::before {
+        content: none;
+      }
+
+      .intro-copy p + p {
+        margin-top: 0;
+      }
+
+      .pipe {
+        display: none;
+      }
+
+      .section {
+        padding: 34px 0;
+        border-bottom: 1px solid var(--faint);
+      }
+
+      .section-label {
+        margin: 0 0 20px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .section-label::before {
+        content: "## ";
+        color: var(--accent);
+        font-weight: 400;
+      }
+
+      .work-list {
+        display: grid;
+        gap: 0;
+        border-top: 1px solid var(--faint);
+        border-left: 1px solid var(--faint);
+      }
+
+      .work-entry {
+        display: grid;
+        grid-template-columns: 72px 140px minmax(0, 1fr);
+        gap: 12px;
+        padding: 11px 14px;
+        border-right: 1px solid var(--faint);
+        border-bottom: 1px solid var(--faint);
+      }
+
+      .branch {
+        display: none;
+      }
+
+      .entry-date {
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .entry-place,
+      .entry-description {
+        margin: 0;
+      }
+
+      .entry-place {
+        font-weight: 700;
+      }
+
+      .entry-description {
+        color: var(--muted);
+      }
+
+      .link-list {
+        display: grid;
+        gap: 0;
+        border-top: 1px solid var(--faint);
+        border-left: 1px solid var(--faint);
+      }
+
+      .link-row {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr);
+        gap: 12px;
+        padding: 9px 14px;
+        border-right: 1px solid var(--faint);
+        border-bottom: 1px solid var(--faint);
+      }
+
+      .link-row a {
+        font-weight: 700;
+      }
+
+      .link-meta {
+        color: var(--muted);
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding-top: 12px;
+        margin-top: auto;
+        color: var(--faint);
+        font-size: 10px;
+      }
+
+      footer p {
+        margin: 0;
+      }
+
+      @media (max-width: 660px) {
+        .shell {
+          width: calc(100% - 28px);
+          min-height: calc(100vh - 36px);
+          margin-top: 18px;
+          padding: 0 16px;
+        }
+
+        .topbar nav {
+          gap: 10px;
+        }
+
+        .topbar nav a:nth-child(2) {
+          display: none;
+        }
+
+        .intro {
+          padding: 58px 0 46px;
+        }
+
+        h1 {
+          font-size: 1.45rem;
+        }
+
+        .section {
+          padding: 28px 0;
+        }
+
+        .work-entry {
+          grid-template-columns: 62px minmax(0, 1fr);
+          gap: 8px;
+        }
+
+        .entry-description {
+          grid-column: 2;
+        }
+
+        .link-row {
+          grid-template-columns: 118px minmax(0, 1fr);
+          gap: 8px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <section>
-        <div>
-            <h3>Hi! I'm Tanush.</h3>
-            <p>I am a rising junior at the Georgia Institute of Technology studying Computer Science and Philosophy.</p>
-            <p>I'm currently doing an internship at Amazon and fellowship in ApartResearch.</p>
-            <p>My current research interests are focused in AI safety, specifically in interpretability and scalable oversight.</p>
-            <p>I like basketball, anime and building cool things.</p>
-            <hr>
-            <p>Reach out to me at tanushchop@gmail.com if we have common interests, or if you just want to chat!</p>
-            <div class="links">
-                <a href="https://www.linkedin.com/in/tanush-chopra" target="_blank">LinkedIn</a>
-                <a href="https://www.github.com/Bluefin-Tuna" target="_blank">GitHub</a>
-                <a href="https://scholar.google.com/citations?user=AzqDHTQAAAAJ&hl=en" target="_blank">Google Scholar</a>
-                <a href="https://drive.google.com/file/d/1N_pVmxxrMm4sANqgErk3MoOWoqrVjLHw/view?usp=sharing" target="_blank">Resume</a>
-                <a href="https://www.instagram.com/dumbassnamedtuna/" target="_blank">Instagram</a>
-                <a href="https://curius.app/tanush-chopra" target="_blank">Curius</a>
-                <a href="https://www.zotero.org/dumbassnamedtuna" target="_blank">Zotero</a>
+    <div class="shell">
+      <header class="topbar">
+        <div class="identity">Tanush Chopra</div>
+
+        <nav aria-label="Primary navigation">
+          <a href="#work">work</a>
+          <a href="#elsewhere">elsewhere</a>
+          <a href="mailto:tanushchop@gmail.com">say hi</a>
+        </nav>
+      </header>
+
+      <div class="ascii-rule" aria-hidden="true">
+        -----------------------------------------------------------------------------------------------
+      </div>
+
+      <main>
+        <section class="intro" aria-labelledby="intro-heading">
+          <p class="eyebrow">README.md</p>
+
+          <div class="intro-copy">
+            <h1 id="intro-heading">
+              I follow whatever seems <em>interesting.</em>
+            </h1>
+            <div class="pipe" aria-hidden="true">|</div>
+            <p>
+              <span>
+                My interests have taken me through startups, AI research,
+                infrastructure, philosophy, and a handful of unrelated rabbit holes.
+              </span>
+            </p>
+            <div class="pipe" aria-hidden="true">|</div>
+            <p>
+              <span>
+                Right now, I work on products at Liquid AI and research model-based
+                reinforcement learning. I studied computer science and philosophy
+                at Georgia Tech.
+              </span>
+            </p>
+            <div class="pipe" aria-hidden="true">|</div>
+          </div>
+        </section>
+
+        <div class="ascii-rule" aria-hidden="true">
+          --- work --------------------------------------------------------------------------------------
+        </div>
+
+        <section class="section" id="work" aria-labelledby="work-heading">
+          <h2 class="section-label" id="work-heading">where-i-have-been</h2>
+
+          <div class="work-list">
+            <div class="pipe" aria-hidden="true">|</div>
+            <article class="work-entry">
+              <span class="branch" aria-hidden="true">|---</span>
+              <time class="entry-date" datetime="2026">now</time>
+              <p class="entry-place">Liquid AI</p>
+              <p class="entry-description">Member of Technical Staff. Building products.</p>
+            </article>
+
+            <div class="pipe" aria-hidden="true">|</div>
+            <article class="work-entry">
+              <span class="branch" aria-hidden="true">|---</span>
+              <span class="entry-date">ongoing</span>
+              <p class="entry-place">Georgia Tech</p>
+              <p class="entry-description">
+                Researching model-based reinforcement learning, robustness, and
+                how models behave outside familiar settings.
+              </p>
+            </article>
+
+            <div class="pipe" aria-hidden="true">|</div>
+            <article class="work-entry">
+              <span class="branch" aria-hidden="true">|---</span>
+              <time class="entry-date" datetime="2025">2025</time>
+              <p class="entry-place">Peppr</p>
+              <p class="entry-description">
+                Founding engineer. Worked across product, infrastructure, and
+                assorted startup problems.
+              </p>
+            </article>
+
+            <div class="pipe" aria-hidden="true">|</div>
+            <article class="work-entry">
+              <span class="branch" aria-hidden="true">|---</span>
+              <time class="entry-date" datetime="2025">2025</time>
+              <p class="entry-place">LASR Labs</p>
+              <p class="entry-description">
+                Researched AI systems, oversight, and what models are actually doing.
+              </p>
+            </article>
+
+            <div class="pipe" aria-hidden="true">|</div>
+            <article class="work-entry">
+              <span class="branch" aria-hidden="true">|---</span>
+              <time class="entry-date" datetime="2024">2024</time>
+              <p class="entry-place">Amazon</p>
+              <p class="entry-description">
+                Built infrastructure and monitoring tools.
+              </p>
+            </article>
+
+            <div class="pipe" aria-hidden="true">|</div>
+            <article class="work-entry">
+              <span class="branch" aria-hidden="true">|---</span>
+              <time class="entry-date" datetime="2024">2024</time>
+              <p class="entry-place">Flux</p>
+              <p class="entry-description">
+                Worked on platform and deployment infrastructure.
+              </p>
+            </article>
+
+            <div class="pipe" aria-hidden="true">|</div>
+            <article class="work-entry">
+              <span class="branch" aria-hidden="true">|---</span>
+              <time class="entry-date" datetime="2023">2023</time>
+              <p class="entry-place">DocuSign</p>
+              <p class="entry-description">
+                Built internal tools for finding information and resolving problems.
+              </p>
+            </article>
+
+            <div class="pipe" aria-hidden="true">|</div>
+            <article class="work-entry">
+              <span class="branch" aria-hidden="true">|---</span>
+              <time class="entry-date" datetime="2021">2021</time>
+              <p class="entry-place">Locab</p>
+              <p class="entry-description">
+                Started an NLP company with some friends. It found its way to Uber.
+              </p>
+            </article>
+            <div class="pipe" aria-hidden="true">|</div>
+          </div>
+        </section>
+
+        <div class="ascii-rule" aria-hidden="true">
+          --- elsewhere ---------------------------------------------------------------------------------
+        </div>
+
+        <section class="section" id="elsewhere" aria-labelledby="elsewhere-heading">
+          <h2 class="section-label" id="elsewhere-heading">elsewhere</h2>
+
+          <div class="link-list">
+            <div class="pipe" aria-hidden="true">|</div>
+            <div class="link-row">
+              <span class="branch" aria-hidden="true">|---</span>
+              <a href="https://firstprinciples.pub/" target="_blank" rel="noopener noreferrer">First Principles</a>
+              <span class="link-meta">Things Michael and I find interesting</span>
             </div>
-        </div>    
-    </section>
+            <div class="pipe" aria-hidden="true">|</div>
+            <div class="link-row">
+              <span class="branch" aria-hidden="true">|---</span>
+              <a href="https://lists.pocketcasts.com/c5575645-0479-4a28-bc26-90fa124b12c2" target="_blank" rel="noopener noreferrer">Podcasts</a>
+              <span class="link-meta">What I have been listening to</span>
+            </div>
+            <div class="pipe" aria-hidden="true">|</div>
+            <div class="link-row">
+              <span class="branch" aria-hidden="true">|---</span>
+              <a href="https://github.com/Bluefin-Tuna" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <span class="link-meta">Code and half-finished ideas</span>
+            </div>
+            <div class="pipe" aria-hidden="true">|</div>
+            <div class="link-row">
+              <span class="branch" aria-hidden="true">|---</span>
+              <a href="https://scholar.google.com/citations?user=AzqDHTQAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+              <span class="link-meta">Research and papers</span>
+            </div>
+            <div class="pipe" aria-hidden="true">|</div>
+            <div class="link-row">
+              <span class="branch" aria-hidden="true">|---</span>
+              <a href="https://drive.google.com/file/d/1N_pVmxxrMm4sANqgErk3MoOWoqrVjLHw/view?usp=sharing" target="_blank" rel="noopener noreferrer">Résumé</a>
+              <span class="link-meta">The more structured version</span>
+            </div>
+            <div class="pipe" aria-hidden="true">|</div>
+            <div class="link-row">
+              <span class="branch" aria-hidden="true">|---</span>
+              <a href="mailto:tanushchop@gmail.com">Email</a>
+              <span class="link-meta">If you want to chat</span>
+            </div>
+            <div class="pipe" aria-hidden="true">|</div>
+          </div>
+        </section>
+      </main>
+
+      <div class="ascii-rule" aria-hidden="true">
+        -----------------------------------------------------------------------------------------------
+      </div>
+
+      <footer>
+        <p>| following the next interesting thing</p>
+        <p>tanush.chopra</p>
+      </footer>
+    </div>
   </body>
 </html>
